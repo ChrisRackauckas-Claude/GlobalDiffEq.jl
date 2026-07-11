@@ -8,6 +8,11 @@ using PrecompileTools: @setup_workload, @compile_workload
 
 abstract type GlobalDiffEqAlgorithm <: SciMLBase.AbstractODEAlgorithm end
 
+"""
+    GlobalRichardson(alg)
+
+Wrap an ODE algorithm with global Richardson extrapolation.
+"""
 struct GlobalRichardson{A <: SciMLBase.AbstractODEAlgorithm} <: GlobalDiffEqAlgorithm
     alg::A
 end

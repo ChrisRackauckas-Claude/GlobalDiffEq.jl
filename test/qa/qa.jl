@@ -5,6 +5,7 @@ using OrdinaryDiffEq, OrdinaryDiffEqSSPRK
 run_qa(
     GlobalDiffEq;
     explicit_imports = true,
+    api_docs_kwargs = (; rendered = true),
     ei_kwargs = (;
         # `SciMLBase.__solve` is SciMLBase's internal solve entry point (not part of
         # the public API); GlobalDiffEq overloads it via its owner SciMLBase.
