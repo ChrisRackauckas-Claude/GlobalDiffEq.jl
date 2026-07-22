@@ -9,9 +9,9 @@ Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [compat]
 Aqua = "0.8"
-GlobalDiffEq = "1"
+GlobalDiffEq = "2"
 JET = "0.9, 0.10, 0.11"
 OrdinaryDiffEq = "7"
 OrdinaryDiffEqSSPRK = "2"
-SciMLTesting = "2.1"
+SciMLTesting = "2.4"
 Test = "1"

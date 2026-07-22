@@ -1,7 +1,7 @@
 using GlobalDiffEq, OrdinaryDiffEq
 using OrdinaryDiffEqSSPRK
+import SciMLBase
 using Test
-import DiffEqBase: SciMLBase
 
 @testset "Algorithm traits forwarding" begin
     alg_inner = SSPRK33()

@@ -1,0 +1,11 @@
+[deps]
+Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
+GlobalDiffEq = "1d72d19b-84cc-4cb7-a099-7cbdb9ccc67c"
+OrdinaryDiffEq = "1dea7af3-3e70-54e6-95c3-0bf5283fa5ed"
+SciMLBase = "0bca4576-84f4-4d90-8ffe-ffa030f20462"
+
+[compat]
+Documenter = "1"
+GlobalDiffEq = "2"
+OrdinaryDiffEq = "7"
+SciMLBase = "3"

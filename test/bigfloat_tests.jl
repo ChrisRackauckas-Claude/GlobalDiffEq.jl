@@ -1,5 +1,6 @@
 using GlobalDiffEq, OrdinaryDiffEq
 using OrdinaryDiffEqSSPRK
+using SciMLBase: ODEProblem, solve
 using Test
 
 @testset "BigFloat support" begin
