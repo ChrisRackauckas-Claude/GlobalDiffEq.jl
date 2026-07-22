@@ -1,5 +1,6 @@
 using GlobalDiffEq, OrdinaryDiffEq, LinearAlgebra
 using OrdinaryDiffEqSSPRK
+using SciMLBase: ODEProblem, solve
 using Test
 
 @testset "Basic functionality" begin

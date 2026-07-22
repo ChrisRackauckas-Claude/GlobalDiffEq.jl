@@ -1,19 +1,44 @@
 module GlobalDiffEq
 
-using Reexport: @reexport
-@reexport using DiffEqBase
-
 import OrdinaryDiffEq, Richardson, SciMLBase
+import SciMLBase: __solve
 using PrecompileTools: @setup_workload, @compile_workload
+using SciMLBase: AbstractDAEProblem, AbstractODEAlgorithm, AbstractODEProblem, ODEProblem,
+    solve
 
-abstract type GlobalDiffEqAlgorithm <: SciMLBase.AbstractODEAlgorithm end
+abstract type GlobalDiffEqAlgorithm <: AbstractODEAlgorithm end
 
 """
     GlobalRichardson(alg)
 
-Wrap an ODE algorithm with global Richardson extrapolation.
+Wrap the fixed-step ODE algorithm `alg` with global Richardson extrapolation.
+
+`GlobalRichardson` solves the problem at successively refined fixed step sizes and uses
+Richardson extrapolation to improve the solution at the requested output times. The wrapped
+algorithm must be an `AbstractODEAlgorithm`; adaptivity is disabled for the inner solves.
+
+# Arguments
+
+- `alg`: An ODE algorithm to run at refined fixed step sizes, such as `Tsit5()` or `SSPRK33()`.
+
+# Fields
+
+- `alg`: The wrapped fixed-step ODE algorithm.
+
+# Example
+
+```jldoctest
+julia> using GlobalDiffEq, OrdinaryDiffEq, SciMLBase
+
+julia> prob = ODEProblem((u, p, t) -> -u, 1.0, (0.0, 1.0));
+
+julia> sol = solve(prob, GlobalRichardson(Tsit5()); dt = 0.1);
+
+julia> length(sol.u) > 1
+true
+```
 """
-struct GlobalRichardson{A <: SciMLBase.AbstractODEAlgorithm} <: GlobalDiffEqAlgorithm
+struct GlobalRichardson{A <: AbstractODEAlgorithm} <: GlobalDiffEqAlgorithm
     alg::A
 end
 
@@ -26,8 +51,8 @@ SciMLBase.allowscomplex(alg::GlobalRichardson) =
 SciMLBase.isautodifferentiable(alg::GlobalRichardson) =
     SciMLBase.isautodifferentiable(alg.alg)
 
-function SciMLBase.__solve(
-        prob::Union{SciMLBase.AbstractODEProblem, SciMLBase.AbstractDAEProblem},
+function __solve(
+        prob::Union{AbstractODEProblem, AbstractDAEProblem},
         alg::GlobalRichardson, args...;
         dt, kwargs...
     )
